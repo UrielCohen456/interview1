@@ -18,14 +18,19 @@ I used the extension devcontainers to build and test the app.
 
 In order to test the chart on a free Kubernetes cluster, I created a kind cluster that deploys an nginx controller and deployed the chart.
 
-Now, since the nginx ingress is serving as a proxy, if you dont add the proxy headers a curl to the localhost application will yield the ip of the cluster bridge network.
+After extensive testing and trying out different things, I could not get the ingress controller to succesfully pass the ip of the request and would always get the docker bridge network ip in the headers.
 Example:
 ```
 curl localhost
 172.18.0.1
 ```
+My theory is that because the kind cluster can only be setup on a bridge type of network on docker and not host network, any request to the cluster goes through docker and that makes it lose the original ip address.
+Ideally the settings on the configmap of the ingress controller should work:
+```use-forwarded-headers: "true"```
+More can be read here: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/configmap.md#forwarded-for-proxy-protocol-header
+similar issue: https://github.com/kubernetes/ingress-nginx/issues/11994
 
-So I modified the controller to forward proxy header 
+perhaps k3d or another more customizable k8s deployment is configurable to allow the proper flow of networking, but due to limitations on time I will leave it as is for now.
 
 to deploy the local test follow these steps:
 

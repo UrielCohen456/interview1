@@ -43,3 +43,23 @@ jobs:
       with:
         push: true
         tags: "${{ vars.DOCKERHUB_USERNAME }}/interview1:latest"
+
+    # These steps im leaving in a comment as I don't have a k8s cluster to actually install in so its just an example
+    # - name: Setup kubeconfig
+    #   uses: azure/k8s-set-context@v4
+    #   with:
+    #     method: kubeconfig
+    #     kubeconfig: ${{ secrets.KUBECONFIG }}
+    #     context: default
+
+    # - name: Install Helm
+    #   uses: azure/setup-helm@v1
+
+    # - name: Deploy to Kubernetes using Helm
+    #   env:
+    #     KUBECONFIG: ${{ github.workspace }}/kubeconfig
+    #   run: |
+    #    cd chart helm upgrade --install my-app . --namespace default
+
+
+
