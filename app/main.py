@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, JSONResponse 
 
 app = FastAPI()
 
@@ -13,3 +13,7 @@ async def get_ip(request: Request):
     else:
         ip = request.client.host
     return ip
+
+@app.get("/healthz", include_in_schema=False)
+async def healthz():
+    return JSONResponse(status_code=200, content={"message": "Healthy"})
