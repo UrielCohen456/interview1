@@ -75,7 +75,7 @@ jobs:
       with:
         to: ${{ vars.EMAIL }}
         subject: 'Failure on building and deploying main'
-        body: '<em>This is a notification from GitHub actions: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID.</em>'
+        body: '<em>This is a notification from GitHub actions: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}.</em>'
         type: 'text/html'
 
 
