@@ -6,6 +6,7 @@ app = FastAPI()
 @app.get("/", response_class=PlainTextResponse)
 async def get_ip(request: Request):
     # Incase we are sitting behind a proxy such as nginx-ingress
+    print(request.headers)
     x_forwarded_for = request.headers.get("x-forwarded-for")
     if x_forwarded_for:
         # The first index passed by nginx header is the original requester's ip

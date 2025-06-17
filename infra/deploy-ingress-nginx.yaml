@@ -321,9 +321,14 @@ subjects:
 ---
 apiVersion: v1
 data: 
-  # use-proxy-protocol: "true"
   use-forwarded-headers: "true"
-  compute-full-forwarded-for: "true"
+  # proxy-real-ip-cidr: "10.0.0.0/8,172.17.0.0/16"  # Replace with your actual CIDR ranges
+  # compute-full-forwarded-for: "true"  # Optional, for preserving all intermediate IPs
+  # use-proxy-protocol: "true" # Optional, if your load balancer supports PROXY protocol
+  # use-proxy-protocol: "true"
+  # enable-real-ip: "true"
+  # compute-full-forwarded-for: "true"
+  # allow-snippet-annotations: "true"
 kind: ConfigMap
 metadata:
   labels:
