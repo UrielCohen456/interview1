@@ -15,3 +15,23 @@ location / {
 ```
 
 I used the extension devcontainers to build and test the app.
+
+In order to test the chart on a free Kubernetes cluster, I created a kind cluster that deploys an nginx controller and deployed the chart.
+
+Now, since the nginx ingress is serving as a proxy, if you dont add the proxy headers a curl to the localhost application will yield the ip of the cluster bridge network.
+Example:
+```
+curl localhost
+172.18.0.1
+```
+
+So I modified the controller to forward proxy header 
+
+to deploy the local test follow these steps:
+
+1. kind create cluster --config infra/kind_config.yaml
+2. kubectl apply -f infra/deploy-ingress-nginx.yaml
+3. wait for controller to be running
+4. helm upgrade --install app ./chart
+5. wait for app the be running
+6. curl localhost:80
