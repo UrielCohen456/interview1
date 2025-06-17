@@ -66,13 +66,17 @@ jobs:
       with:
         to: ${{ vars.EMAIL }}
         subject: 'Success on building and deploying main'
-        body: '<em>This is a notification from GitHub actions.</em>'
+        body: '<em>This is a notification from GitHub actions: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID.</em>'
         type: 'text/html'
 
     # Add email if fail that something failed
-    # - run: exit 1
-    #   if: ${{ failure() }}
-    #   shell: pwsh
+    - uses: cinotify/github-action@main
+      if: ${{ failure() }}
+      with:
+        to: ${{ vars.EMAIL }}
+        subject: 'Failure on building and deploying main'
+        body: '<em>This is a notification from GitHub actions: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID.</em>'
+        type: 'text/html'
 
 
 
